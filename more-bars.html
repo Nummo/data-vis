@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test-More Bars</title>
+        <script type="text/javascript" src="d3/d3.js"></script>
+        <link rel="stylesheet" href="index.css"> 
+    </head>
+    	<body>
+		<script type="text/javascript">
+
+			var dataset = [];  						 //Initialize empty array
+			for (var i = 0; i < 55; i++) {			 //Loop 25 times
+				/*var newNumber = Math.random() * 100; */ //New random number (0-30)
+				var newNumber = Math.round(Math.random() * 30); //New random whole number (0-30)
+				dataset = dataset.concat(newNumber); //Add new number to array
+			} //check the results in the javascript console with console.log(dataset)
+			
+			d3.select("body").selectAll("div")
+				.data(dataset)
+				.enter()
+				.append("div")
+				.attr("class", "bar")
+				.style("height", function(d) {
+					var barHeight = d * 5;
+					return barHeight + "px";
+				});
+			
+		</script>
+	</body>
+</html>
