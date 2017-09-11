@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test - bars 많이 </title>
+        <script type="text/javascript" src="d3/d3.js" src="index.css"></script>
+    </head>
+    <body>
+    	<script type="text/javascript">
+
+			//Width and height
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;  // <-- part of bar width proportions
+			
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+			
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length);
+			   }) // ties the x to the width of the SVG (w) and the number of values in the data set (dataset.length). this allows the bars to be evenly spread. 
+			   //It’s good practice to use flexible, dynamic coordinates — heights, widths, x values, and y values — so your visualization can scale appropriately along with your data.
+			   .attr("y", function(d) {
+			   		return h - (d * 4);
+			   }) //Height minus data value. creates the bars from bottom to top, without it the bottom and top are flipped - this is due to how SVG reads data
+			   .attr("width", w / dataset.length - barPadding) // sets the bar widths to be proportional, so they get narrower as more data is added, or wider when there are fewer values.
+			   .attr("height",  function(d) {
+    			return d*4;  //changes the height of the bars
+				})
+			   .attr("fill", function(d) {
+    				return "rgb(255, 215, " + (d * 10) + ")";
+					}); // encode the data as color - allows data to drive colour
+			 svg.selectAll("text")
+   				.data(dataset)
+   				.enter()
+   				.append("text")
+   				.text(function(d) {
+        			return d;
+  				 }) 
+  				 // below positions numbers/ data in each of its respective bar
+   				//.attr("x", function(d, i) {
+        		//return i * (w / dataset.length) + 5;  // +5
+   				//}) //first attr positions data in the coloumn - no focus on centring/ position
+   				//.attr("y", function(d) {
+        		//return h - (d * 4) + 15;              // +15
+   				//})
+   				//first 3 attr change the centring position of the data labels 
+   				.attr("text-anchor", "middle")
+   				.attr("x", function(d, i) {
+			   		return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;})
+			   	.attr("y", function(d) {
+			   		return h - (d * 4) + 14;})
+   				.attr("font-family", "sans-serif")
+   				.attr("font-size", "11px")
+   				.attr("fill", "grey");
+
+
+
+		</script>
+    </body>
+</html>
