@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test - drawing SVG</title>
+        <script type="text/javascript" src="d3/d3.js" src="index.css"></script>
+    </head>
+    <body>
+ 
+    	<script type="text/javascript">
+			
+			//Width and height
+			var w = 500;
+			var h = 50;
+			
+			//Data
+			//var dataset = [ 5, 10, 15, 20, 25 ];
+			
+			var dataset = [];  //Initialize empty array
+
+			for (var i = 0; i < 55; i++) {			 //Loop 25 times
+				/*var newNumber = Math.random() * 100; */ //New random number (0-30)
+				var newNumber = Math.round(Math.random() * 30); //New random whole number (0-30)
+				dataset = dataset.concat(newNumber); //Add new number to array
+			} //check the results in the javascript console with console.log(dataset)
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", 500)
+						.attr("height", 50);
+
+			var circles = svg.selectAll("circle")
+			    .data(dataset)
+			    .enter()
+			    .append("circle");
+
+			
+
+			circles.attr("cx", function(d, i) {
+						return (i * 50) + 25;
+					}) // each circle, the value d matches the corresponding value in our original data set. i, is also automatically populated for us. i is a numeric index value of the current element. Counting starts at zero so for our “first” circle i == 0, the second circle’s i == 1 and so on. 
+				   .attr("cy", h/2) // h is the height of the entire SVG, so h/2 is one-half of its height. 
+				   .attr("r", function(d) {
+						return d;
+				   }) //  the radius r of each circle is simply set to d, the corresponding data value.
+					.attr("fill", "pink")
+					.attr("stroke", "red")
+					.attr("stroke-width", function(d) {
+    					return d/2;
+					});
+    		</script>
+
+    </body>
+</html>
